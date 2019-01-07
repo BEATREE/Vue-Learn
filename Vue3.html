@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>条件与循环 | Vue.js</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h2>Vue.js 条件语句</h2>
+    <div id="app-3">
+            <p v-if="seen">现在你看到我了</p>   
+    </div>  
+
+    <h2>Vue.js 循环语句</h2>
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>  
+
+    <script>
+        //选择结构
+        var app3 = new Vue({
+            el: '#app-3',
+            data: {
+                seen: true
+            }
+        })
+        //循环结构
+        var app4 = new Vue({
+            el: '#app-4',
+            data: {
+                todos: [
+                { text: '学习 JavaScript' },
+                { text: '学习 Vue' },
+                { text: '整个牛项目' }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>
