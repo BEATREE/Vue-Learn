@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性和侦听器 | Vue.js</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css" rel="stylesheet">
+        [id^=app]{
+            width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="example">
+        <h2>计算属性缓存</h2>
+        <p>Original message: "{{ message }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+        <hr>
+        <h2>计算属性缓存 VS 方法</h2>
+        <p>Reversed message: "{{ reversedMessage() }}"</p>
+    </div>
+
+    <script>
+        var example = new Vue({
+            el: "#example",
+            data: {
+                message: "Hello Vue.js"
+            },
+            computed: {  //计算属性缓存
+                // 计算属性的 getter
+                reversedMessage: function () {
+                    //this 指向vm实例
+                    return this.message.split("").reverse().join("")
+                }
+            },            
+            methods: {// 在组件中
+                reversedMessage: function(){
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+        console.log(example.reversedMessage) // => 'sj.euV olleH'
+        example.message = 'Goodbye'  
+        console.log(example.reversedMessage) // => 'eybdooG'
+    </script>
+    
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过滤器的简单使用 | Vue.js</title>        
+    <script src="libs/js/vue.js"></script>
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+</head>
+<body>
+    
+    <div id="app" >
+        <p>{{ msg | messageChange("想念") | test }}</p>
+        <!-- 过滤器可以多次调用，并且一次调用，前边的输出是后边的输入类似于Linux 管道符的作用 -->
+    </div>
+
+    <script>
+
+        // Vue的过滤器
+        // Vue.filter('过滤器的名称',function(){})
+        // 过滤器中的 function 第一个参数已经被规定死了，永远都是管道符前边传来的数据。
+        // 字符串的 replace 方法，第一个参数可以写一个字符串外， 也可以定义一个正则
+        Vue.filter('messageChange', function(msg, arg) {    // 传入参数bs
+            return msg.replace(/爱/g, arg)     //前边是个正则 /g 表示全局匹配
+        })
+        Vue.filter("test", function(msg){
+            return msg + "==="
+        })            
+        //定义到实例后会无法识别，报错
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg: "我爱你啊，爱你的一批，爱的难舍难分",
+                
+            },
+            methods: { },
+            filters: {  //定义私有过滤器 在vue实例内
+                //两个条件 过滤器名称 和处理函数
+                messageChange:function(msg){   //名字：函数
+                    return "这是个私有的过滤器"
+                },//在调用过程中，如果全局的和私有的一致，则以私有的为先
+                
+
+            }
+        })
+
+        
+    </script>
+    
+</body>
+</html>
+
+<!-- 过滤器调用时候的格式 {{name | 过滤器的名称}} 
+    表示在输出 name 的值之前，首先掉弄 nameOperation 进行初步处理，并把处理的结果返回到这个位置
+--> 

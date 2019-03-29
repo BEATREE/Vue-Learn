@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue testPage1</title>
+    <script src="libs/js/vue.js"></script>
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>id:<input type="text" class="form-control" v-model="id"></label>
+                <!-- @keyup.keyId = "methodName" 绑定键盘键抬起操作 keyId 绑定固定的键   -->
+                <label>Name:<input type="text" class="form-control" v-model="name" @keyup.f2="add"></label>
+                <input type="button" value="添加" class="btn btn-primary" @click="add">
+                <label>Keywords:<input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'"></label>
+                <!-- 将 blue 写在 单引号中表明时个字符串，而非 Vue 的变量，否则它会去js中寻找变量 -->
+                <!-- <input type="button" value="搜索" @click="search"> -->
+            </div>
+        </div>
+
+        <table class="table table-light">
+            <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keywords)" :key="item.id">
+                    <td> {{ item.id }} </td>
+                    <td> {{ item.name }} </td>
+                    <td><a href="" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+            <!-- <tfoot>
+                <tr>
+                    <th>#</th>
+                </tr>
+            </tfoot> -->
+        </table>
+        <h2 v-fontweight="800" v-color="'green'" v-fontsize="'55px'">testMessage</h2>
+    </div>
+
+    <script>
+        // 自定义指令
+        // 注册全局指令 v-focus
+        // 参数1 指令的名称 定义时候不需要 v- 的前缀，调用的时候加上前缀
+        // 参数2 是一个对象，包含和指令相关的函数，这些函数可以在特定的阶段执行相关的操作
+        // 和样式相关的最好在 bind 中设置 和 js 行为相关设置在 inserted 中
+        Vue.directive('focus', {
+            // 当被绑定元素插入到 DOM 中的时候
+            inserted: function (el) {
+                // 聚焦元素
+                el.focus();
+            },
+            update: function (el) {
+
+            }
+        })
+
+        Vue.directive('color',{
+            bind: function (el, binding){
+                el.style.color = binding.value;   // 设置样式时候不需要考虑是否被插入到dom中，当组件插入到页面中的时候，肯定会解析css样式
+                console.log('Testing binding: ', binding.name);
+                console.log('Testing binding: ', binding.value);
+                console.log('Testing binding: ', binding.expression);
+            },
+            
+        })
+
+        //实例化vue对象
+        var app = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                keywords: "",   //搜索的关键字
+                list: [
+                    { id: 1, name: "以纯" },
+                    { id: 2, name: "森马" },
+                    { id: 3, name: "真维斯" },
+                ],
+            },
+            methods: {
+                add() {
+                    var clothes = { id: this.id, name: this.name }
+                    this.list.push(clothes)
+                    this.id = this.name = ""
+                },
+                del(id) {    //根据id删除数据
+                    //分析，如何根据id找到要删除的索引数据
+                    //找到索引后，直接调用数组的 splice 方法
+
+                    // this.list.some((item, i)=>{
+                    //     if(item.id == id){
+                    //         this.list.splice(i,1)
+                    //         return true;
+                    //         //在数组的 some 方法中，如果return true 就会立即终止这个数组的后续循环
+                    //     }
+                    // })
+                    var index = this.list.findIndex(item => {
+                        if (item.id == id) {
+                            return true;
+                        }
+                    })
+                    this.list.splice(index, 1);
+                },
+                search(keywords) {   //use keywords to search data/messages
+
+                    //var newList = []
+                    // this.list.forEach(item => { //please pay attention to 'forEach', and it's structure
+                    //     if(item.name.indexOf(keywords) != -1){
+                    //         newList.push(item)
+                    //     }
+                    // })
+                    // return newList
+
+                    // another method
+                    // Notice: forEach、 some、 filter、 findIndex . All of these are new methods of Array 
+
+                    var newList = this.list.filter(item => {
+                        // if (item.name.indexOf(keywords) != -1)
+
+                        // Notice: in ES6, there is a new method of type string,  and name is 
+                        // string.prototype.includes('The string to include')  if include then return true
+
+                        if (item.name.includes(keywords)) {
+                            return item
+                        }
+
+                    })
+                    return newList
+                    //或者直接 return this.list.filter() 方法
+                }
+            },
+            // 局部自定义指令，只在当前定义的组件中使用
+            directives: {
+                'fontweight': { // 指令名称
+                    // 指令的定义
+                    bind: function(el, binding){
+                        el.style.fontWeight = binding.value;
+                    }
+                },
+                'fontsize': function (el, binding) {    // 注意这个function 等同于把代码写道 bind 和 update 中去。
+                    el.style.fontSize = parseInt(binding.value) + "px";                    
+                }
+            },
+        })
+
+        //Vue的过滤器
+        //Vue.filter('过滤器的名称',)
+    </script>
+</body>
+
+</html>

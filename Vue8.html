@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板语法 | Vue.js</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css" rel="stylesheet">
+        [id^=app]{
+            width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="app-8">
+        <h1>Vue.js 模板语法</h1>
+        <h2>插值</h2>
+        <h3>文本</h3>
+        可以更新绑定的值<br>
+        <span>Message: {{ msg }}</span>
+        <br>
+        不更新绑定的值<b><code>v-once</code></b>指令<br>
+        <span v-once>Message: {{ msg }}</span>
+        <br>
+        Please input some words:<input type="text" v-model="msg">
+        <hr>
+        <h3>原始Html</h3>
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+        <h3>特性</h3>
+        Mustache 语法不能作用在 HTML 特性上，遇到这种情况应该使用 <b>v-bind</b> 指令：<br>
+        <div v-bind:id="dynamicId"></div>
+        在布尔特性的情况下，它们的存在即暗示为 true，v-bind 工作起来略有不同，在这个例子中：<br>
+        <button v-bind:disabled="isButtonDisabled">Button</button><br>
+        如果 <code>isButtonDisabled</code> 的值是 null、undefined 或 false，
+        则 disabled 特性甚至不会被包含在渲染出来的 <code>&lt;button&gt;</code> 元素中。
+        <hr>
+        <h3>使用JavaScript表达式</h3>
+        对于所有的属性绑定值，Vue.js都提供了完全的JavaScript表达式支持。<br>
+        {{ number + 1 }}  <br>
+        {{ ok ? "yes" : "no"}}<br>
+
+    </div>
+    <script>
+        var app8 = new Vue({
+            el: "#app-8",
+            data: {
+                msg:"abc",
+                rawHtml: "<span style='color:red'>This should be red</span>",
+                isButtonDisabled: "false",
+                number: 1,
+                ok: true
+            }
+        })
+    </script>
+    
+</body>
+
+</html>
