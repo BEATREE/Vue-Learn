@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title></title>
+        <!-- 引入vue.js -->
+        <script src='./libs/js/vue.js'></script>
+        <!-- 引入vue-resource -->
+        <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script> 
+    </head>
+    <body>
+        <div id='app'>
+            <input type="button" value="Get请求" @click="getInfo">
+            <input type="button" value="Post请求" @click="postInfo">
+            <input type="button" value="jsonp请求" @click="jsonpInfo">
+        </div>
+    
+    </body>
+    <script>
+        // 实例化vue对象
+        var vm = new Vue({
+            // 绑定对象
+            el:'#app',
+            data:{
+                
+            },
+            methods:{
+                // 官方：github地址：https://github.com/pagekit/vue-resource
+                getInfo(){
+                    console.log("发送get请求")
+                    // 当发送 get 请求后， 通过 .then 来设置成功后的回调函数
+                    this.$http.get('http://vue.studyit.io/api/getlunbo').then(function(result){
+                        console.log(result.body)
+                        // 通过 result.body 拿到服务器返回的成功的数据
+                    })
+                },
+                postInfo(){
+                    console.log("发送post请求")
+                    // 手动发起的Post 请求，默认没有表单格式(application/x-www-form-urlencoded)，
+                    // 所以，有的服务器处理不了
+                    // 第二个参数，是要提交给服务器的数据，第三个是提交数据的格式
+                    // 通过 post 的第三个参数 设置提交的类型为普通表单，需要加上emulateJSON:true
+                    this.$http.post("http://vue.studyit.io/api/post",{},{emulateJSON:true}).then(res=>{
+                        console.log(res.body)
+                    })
+                },
+                jsonpInfo(){
+                    console.log("发送jsonp请求")
+                    // 
+                    this.$http.jsonp("http://vue.studyit.io/api/jsonp").then(res=>{
+                        console.log(res)
+                    })
+                }
+            }
+        })
+    </script>
+</html>

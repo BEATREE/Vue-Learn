@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- 
+    2019年3月24日
+来了 api 要用趁早哦
+
+用到的api
+
+- get 请求获取所有品牌列表的 api
+
+http://kerys.pythonanywhere.com/api/getprodlist/
+
+调用方式: GET 请求直接调用
+
+- post 请求添加品牌的 api
+
+http://kerys.pythonanywhere.com/api/addprod/
+
+调用方式:POST 请求 需要的参数 {name: '品牌名称'} , {emulateJSON:true} 普通表单请求
+
+- get 请求删除品牌的 api
+
+http://kerys.pythonanywhere.com/api/delprod/id
+
+调用方式: GET 请求 id 是品牌的id int类型
+
+js 箭头函数
+
+(参数1, 参数2, …, 参数N) => { 函数声明 }
+
+//相当于：(参数1, 参数2, …, 参数N) =>{ return 表达式; }
+(参数1, 参数2, …, 参数N) => 表达式（单一）
+
+// 当只有一个参数时，圆括号是可选的：
+(单一参数) => {函数声明}
+单一参数 => {函数声明}
+
+// 没有参数的函数应该写成一对圆括号。
+() => {函数声明}
+ -->
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title></title>
+        <!-- 引入vue.js -->
+        <script src='./libs/js/vue.js'></script>
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="./libs/css/bootstrap.css">
+        <!-- 引入vue-resource -->
+        <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script> 
+
+    </head>
+    <body>
+        <div id='app'> 
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">添加品牌</h3>
+                </div>
+                <div class="panel-body form-inline">
+                    <label>Name:
+                        <input type="text" class="form-control" v-model="name" @keyup.enter="add">
+                    </label>
+                    <input type="button" value="添加" class="btn btn-primary" @click="add">
+                </div>
+            </div>
+
+
+            <!-- 表格 -->
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Ctime</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in list" :key="item.id">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.ctime | dataFormat}}</td>
+                        <td>
+                            <a href="" @click.prevent="del(item.id)">删除</a>
+                            <!-- 阻止超链接默认行为，然后执行del方法 -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+    <script>
+        // 定义全局过滤器
+        // Vue.filter('过滤器名称',function(){})
+        Vue.filter('dataFormat',function(datastr,pattern=''){
+            var data = new Date(datastr)
+            var year = data.getFullYear()
+            var month = data.getMonth() + 1;
+            var day = data.getDate()
+            var hour = data.getHours()
+            var minute = data.getMinutes()
+            var second = data.getSeconds()
+            // return year + '-' + month + '-' + day
+            if(pattern.toLowerCase() === 'yyyy-mm-dd'){
+                return `${year}-${month}-${day}`
+            }else{
+                return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+            }
+            
+        })
+
+        // 定义默认的根路径/根域名
+        // 如果通过全局配置了请求的根域名，则每次单独发起http请求的时候，请求的地址应该以 相对url路径，
+        // 前边不能加 “/”，否则不会以根路径做拼接。
+        Vue.http.options.root = "http://kerys.pythonanywhere.com/"
+        // 全局启用 emulateJSON = true
+        Vue.http.options.emulateJSON = true
+        // 实例化vue对象
+        var vm = new Vue({
+            // 绑定对象
+            el:'#app',
+            data:{
+                name:'',
+                list:[  // 存放所有品牌列表的数组。注意，以 [ ] 在外层包围定义
+                    {id:1,name:'奔驰',ctime:new Date()},
+                    {id:2,name:'宝马',ctime:new Date()}
+                ]
+            },
+            methods:{
+                add(){ //添加方法 POST 请求
+                    // 分析： 经过查看数据API接口， 发送 POST 请求， this.$http.post()
+                    // 2. this.$http.post() 中接受三个参数
+                    //      2.1 第一个参数： 请求的 http 地址
+                    //      2.2 第二个参数： 要提交给服务器的数据，要以对象形式进行提交 {name: this.name}
+                    //      2.3 第三个参数： 是一个配置对象，要以哪种表单类型提交过去, {emulateJSON: true}
+                    //          以普通表单格式提交数据，发送到服务器    application/x-www-form-urlencoded
+                    //3. 在POST方法中，使用 .then 来设置成功回调的函数，如果要拿到成功的结果，需要 result.body
+                    this.$http.post("api/addprod/", {name: this.name},
+                    // 不加斜线会进行拼接，加上斜线不能进行与根目录的拼接
+                    {emulateJSON:true}).then((result) => {
+                        if (result.body.status == "success") {
+                            // 成功了，需要刷新当前显示的数据列表
+                            this.getAllList();
+                            // 清空 name
+                            this.name = ""; 
+                        }else{
+                            alert("添加失败！")
+                        }
+                    })
+                },
+
+                getAllList(){   // 获取所有品牌的列表
+                    // 分析： 
+                    // 1. 我们已经导入了 vue-resource 这个包， 可以直接通过 this.$http 发起数据请求
+                    // 2. 根绝接口API 文档，获取列表时候的发送的请求是 get 请求。
+                    // 3. this.$http.get("url").then(function(result){})
+                    // 4. 当通过 then 的回调函数，可以拿到数据服务器返回的数据 result 。
+                    // 5. 先判断 result.status 是否等于0，如果等于0，就成功了 。
+                    // 可以把result.message 赋值给this.list; 如果不等于 0 则获取内容失败
+                    
+                    this.$http.get("api/getprodlist/").then(result => {
+                       // 这个是获取返回数据的主体内容，数据都放在body中
+                        var result = result.body   
+                        if (result.status == "success") {   
+                            // 因为上述连接中的status是success，所以如果是success就成功了
+                            // 成功了
+                            this.list = result.message
+                        }else{
+                            // 失败了
+                            alert("获取信息失败！")
+                        }
+                    })
+
+                },
+                
+                del(id){
+                    // 配置了全局根域名后仍然可以使用http进行访问
+                    // this.$http.get("http://kerys.pythonanywhere.com/api/delprod/"+id).then(function(rusult){
+                    //     console.log(rusult)
+                    //     if (rusult.status !== "success") {
+                    //         this.getAllList();
+                    //     }else{
+                    //         alert("失败了！")
+                    //     }
+                    // })
+                    this.$http.get("http://kerys.pythonanywhere.com/api/delprod/"+id).then(res=>{
+                        console.log(res)
+                        if(res.status !== "success"){
+                            this.getAllList();
+                        }else{
+                            alert("失败了!");
+                        }
+                    })
+                },
+            },
+            created() { // 当 VM 实例的 data 和 methods 初始化完成时候，执行下边的生命周期函数
+                this.getAllList();
+            },
+           
+        })
+    </script>
+</html>
