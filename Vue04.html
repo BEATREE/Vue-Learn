@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>处理用户输入 | Vue.js</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+</head>
+
+<body>
+    <h2>Vue.js 处理用户输入</h2>
+    <div id="app-5">
+        <p> {{ message }} </p>
+        <button v-on:click="reverseMessage">点击反转字符串</button>
+    </div>
+
+    <script>
+        var app5 = new Vue({
+            el: "#app-5",
+            data: {
+                message : "Hello Vue.js World !"
+            },
+            methods:{
+                reverseMessage:function(){
+                    this.message = this.message.split("").reverse().join("")
+                }
+            }
+        })
+    </script>
+    
+</body>
+
+</html>
