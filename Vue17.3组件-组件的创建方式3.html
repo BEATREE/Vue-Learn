@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 组件 | Vue.js</title>
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 如果要使用组件，直接，将组件的名称以html标签的形式引入页面即可 -->
+        <mycomp3></mycomp3>
+    </div>
+    <div id="app2">
+        <!-- 如果要使用组件，直接，将组件的名称以html标签的形式引入页面即可 -->
+        <mycomp3></mycomp3>
+        <login></login>
+    </div>
+    
+
+    <!-- 在被控制的 #app 外部，使用 template 元素定义组件的 HMTL 模板结构 -->
+    <template id="templ">
+        <div>
+            <h1>这是通过 template 元素在外部定义的组件结构，这个方式，有代码提示和高亮</h1>
+        </div>
+    </template>
+    
+    <template id="templ2">
+        <div>
+            <h1>私有组件</h1>
+        </div>
+    </template>
+    <script>
+        
+        Vue.component("mycomp3", {
+            template: "#templ"
+        })
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                name() {
+                    
+                },
+            },
+        })
+
+        var app2 = new Vue({
+            el: "#app2",
+            data: {},
+            methods: {},
+            filters: {},    // 定义私有过滤器
+            directives: {}, // 定义私有指令
+            components: {   // 定义私有组件
+                login: {    // login 是私有组件的名称
+                    template:  "#templ2" //"<h1>这是私有的组件</h1>"
+                }
+            }, 
+
+            beforeCreate(){},
+            created(){},
+            beforeMount(){},
+            mounted(){},
+            beforeUpdate(){},
+            updated(){},
+            beforeDestory(){},
+            destoryed(){}
+        })
+    </script>
+</body>
+</html>

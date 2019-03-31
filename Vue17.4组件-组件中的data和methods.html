@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件中的data和methods</title>
+
+    <!-- 引入 Vue.js 文件 -->
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mycomp1></mycomp1>
+    </div>
+
+    <script>
+        // 1. 组件可以有自己的 data 
+        // 2. 组件上的 data 于实例中的不同，实例中的data可以是一个对象，而组件中的 data 必须是一个方法
+        // 3. 组件中的 data 除了是一个方法外，方法内部还需要返回一个对象才行
+        // 4. 组件中的 data 数据和实例中的 data 使用方式完全一样！！！
+        Vue.component("mycomp1", {
+            template: "<h1>这是全局组件-{{msg}}</h1> ",  // 组件的 template (模板)属性
+            data: function(){ 
+                return {
+                    msg: "这是组件中自己的 data 属性的 msg "
+                }
+            }
+            
+        })
+
+        var app = new Vue({
+            el: "#app",
+            data: {},
+            components: {},
+        })
+    </script>
+</body>
+</html>

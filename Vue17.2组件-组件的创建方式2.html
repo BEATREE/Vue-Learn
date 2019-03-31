@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 组件 | Vue.js</title>
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 如果要使用组件，直接，将组件的名称以html标签的形式引入页面即可 -->
+        <mycomp2></mycomp2>
+    </div>
+    <script>
+        
+        Vue.component("mycomp2", {
+
+            // Attention: 无论是那种方式创建的组件，组件的 template 属性指向的模板内容，必须有且只有一个唯一的根元素
+            // template: "<h3>这是直接使用Vue.component创建的组件</h3><span>123</span>"
+            template: "<div><h3>这是直接使用Vue.component创建的组件</h3><span>123</span></div>"
+        })
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                name() {
+                    
+                },
+            },
+
+        })
+    </script>
+</body>
+</html>

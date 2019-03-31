@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件中的data和methods</title>
+    <!-- 引入 Vue.js 文件 -->
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <counter></counter>
+        <hr>
+        <counter></counter>
+        <hr>
+        <counter></counter>
+    </div>
+
+    <template id="templ">
+        <div>
+            <input type="button" value="+1" @click="increment">
+            <h3>{{ count }}</h3>
+        </div>
+    </template>
+
+    <script>
+
+        var dataObj = {count: 0, }
+
+        // 这是个计数器的组件，身上有个按钮，每次点击按钮 data 中的 count+1
+        Vue.component("counter", {
+            template: "#templ",
+            data: function(){
+                // return {dataObj}     加上大括号不行，因为它本身就是以恶搞对象，加上后会返回 dataObj, 而非它内部的值
+                //return dataObj     // 外界的对象，会让通过模板创建的组件公用一个数据，所以data需要是一个函数，返回自己内部的数据
+                return { count: 0 }
+            },
+            methods: {
+                increment(){
+                    this.count++
+                }
+            }
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {},
+            components: {},
+        })
+    </script>
+</body>
+</html>
