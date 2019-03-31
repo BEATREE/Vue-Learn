@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js World</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app1">
+        {{message}}
+    </div>
+    
+    <script>
+        var app1 = new Vue({
+            el: '#app1',       // el 相当于选择器，用于确定绑定的组件，这里是 #app ；因为在html中定义的 div 的id为 “app1”
+            data: {           // data 定义Vue中的数据，进行绑定，在这里我们定义了 message 
+                message: 'Hello Vue.js !'
+            }
+        })
+    </script>
+</body>
+</html>
