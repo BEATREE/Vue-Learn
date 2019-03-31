@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板语法-指令 | Vue.js</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css" rel="stylesheet">
+        [id^=app]{
+            width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="app-8">
+        <h1>Vue.js 模板语法</h1>
+        <h2>指令</h2>
+        <h3>v- 开头的特殊属性</h3>
+        <p v-if="seen">Seen的值为true</p>
+        <input type="text" v-model="seen">
+        <br>
+        
+
+    </div>
+    <script>
+        var app8 = new Vue({
+            el: "#app-8",
+            data: {
+                msg:"abc",
+                rawHtml: "<span style='color:red'>This should be red</span>",
+                isButtonDisabled: "false",
+                number: 1,
+                seen: false
+            }
+        })
+    </script>
+    
+</body>
+
+</html>
