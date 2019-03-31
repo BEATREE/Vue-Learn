@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画 | Vue.js</title>
+
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 需求，点击按钮 h3 显示，再次点击 h3 隐藏 -->
+        <button type="button" class="btn btn-primary" @click="flag=!flag">button</button>
+        <h3 v-if="flag">{{ msg }}</h3>
+        
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                flag: true,
+                msg: "This Is A H3 Title"
+            },
+            methods: {
+               
+            },
+        })
+    </script>
+</body>
+</html>

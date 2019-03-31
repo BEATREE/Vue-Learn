@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画 | Vue.js</title>
+
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <link href="https://cdn.bootcss.com/animate.css/3.7.0/animate.css" rel="stylesheet">
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 需求，点击按钮 h3 显示，再次点击 h3 隐藏 -->
+        <button type="button" class="btn btn-primary" @click="flag=!flag">button</button>
+        <hr>
+        <h4>类名直接指用zoomIn和zoomOut，不会出现动画效果</h4>
+        <!-- 入场动画 zoomIn 出厂动画 zoomOut -->
+        <transition enter-active-class="zoomIn" leave-active-class="zoomOut">
+            <h3 v-if="flag">{{ msg }}</h3>
+        </transition>
+        <hr>
+        <h4>类名加上基础类 animated 再加上 zoomIn，才会出现动画效果</h4>
+        <!-- <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+                <h3 v-if="flag">{{ msg }}</h3>
+        </transition> -->
+
+        <!-- 使用 :duration="毫秒值" 来同一设置 入场 和 离场 的动画时长 -->
+        <!-- “：”属性绑定 -->
+        <!-- <transition enter-active-class="zoomIn" leave-active-class="zoomOut" :duration="500">
+            <h3 v-if="flag" class="animated">{{ msg }}</h3>
+        </transition> -->
+
+        <!-- 使用 :duration="{ enter:200, leave: 300 }" 来分别设置入场时长和离场的时长 -->
+        <transition enter-active-class="zoomIn" leave-active-class="zoomOut" :duration="{ enter:200, leave: 600 }"><!-- 花费500ms -->
+            <!-- “：”属性绑定 -->
+            <h3 v-if="flag" class="animated">{{ msg }}</h3>
+        </transition>
+
+        
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                flag: true,
+                msg: "This Is A H3 Title"
+            },
+            methods: {
+               
+            },
+        })
+    </script>
+</body>
+</html>

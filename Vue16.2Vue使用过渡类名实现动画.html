@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画 | Vue.js</title>
+
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <!-- 2、自定义两组样式来控制 transition 内部元素的实现动画 -->
+    <style >
+        /* v-enter 是一个时间点，此时还没有进入，发生在进入之前 */
+        /* v-leave-to 是在动画离开之后，动画的终止状态，此时元素已经离开动画范围 */
+        .v-enter, .v-leave-to{
+            opacity: 0;     /*不透明度，0全透明 1不透明*/
+            transform: translateX(80px);
+        }
+        /* v-enter-active 入场动画的时间段， 是一个 时间段 */
+        /* .v-leave-active 入场动画的时间段， 是一个 时间段 */
+        .v-enter-active, .v-leave-active{
+            transition: all 0.6s ease;
+        }
+
+        /* 自定义的name属性对应的css */
+        .vflag-enter, .vflag-leave-to{
+            opacity: 0;     /*不透明度，0全透明 1不透明*/
+            transform: translateY(80px);
+        }
+        .vflag-enter-active, .vflag-leave-active{
+            transition: all 0.6s ease;
+        }
+    </style>
+
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 需求，点击按钮 h3 显示，再次点击 h3 隐藏 -->
+        <button type="button" class="btn btn-primary" @click="flag=!flag">button</button>
+        <!-- 1、使用 transition 元素， 把需要被动画控制的元素包裹起来 -->
+
+        <!-- transition 元素是 VUE 官方提供的 -->
+        <transition>
+                <h3 v-if="flag">{{ msg }}</h3>
+        </transition>
+
+        <hr>
+        
+        <button type="button" class="btn btn-primary" @click="flag2=!flag2">button2</button>
+        <!-- 1、使用 transition 元素， 把需要被动画控制的元素包裹起来 -->
+
+        <!-- transition 自定义 name -->
+        <transition name="vflag">
+                <h5 v-if="flag2">This Is A H5 Title</h5>
+        </transition
+        
+        
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                flag: true,
+                flag2: true,
+                msg: "This Is A H3 Title"
+            },
+            methods: {
+               
+            },
+        })
+    </script>
+</body>
+</html>

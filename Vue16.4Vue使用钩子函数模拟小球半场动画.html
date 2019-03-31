@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 钩子函数动画 | Vue.js</title>
+    <script src="libs/js/vue.js"></script>
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <style>
+        .ball{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="快到碗里来" @click="flag=!flag">
+        <!-- 1. 使用 transition 元素将小球包裹 -->
+        
+        <transition
+            mode="out-in"
+            @befor-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+            >
+            <!-- 这里需要用 v-if 而不是 v-show， 因为要在她加入文档流的时候，会执行before-enter
+                v-show 的话则是加入，只改变属性，只有第一次有用。而后不会出现动画效果
+            -->
+            <div class="ball" v-if="flag"></div>
+        </transition>
+        
+    </div>
+    <script>
+        // 复习自定义指令，el 指的是对应元素
+        Vue.directive("focus",function(el){})
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+                
+            },
+            methods: {
+                // 注意：动画狗钩子函数的第一个参数：el，表示要执行的那个DOM元素，是个原生的 JS DOM 对象
+                // el 是通过这种方式 document.getElementById() 获取到的原生参数
+                beforeEnter(el) {
+                    // 对应动画入场之前的处理，此时动画 尚未开始 ，可以在beforeEnter中设置元素开始动画之前的起始样式
+                    el.style.transform = "translate(0,0)"   // 设置小球的起始位置
+
+                },
+                enter(el, done) {
+                    // el.offsetWidth 这句话会出现动画效果，但是不写没有动画效果
+                    // el.offsetWidth 会强制动画刷新
+                    // 和 offset 相关的就可以 el.offsetWidth el.offsetHeight el.offsetLeft。。。
+                    el.offsetWidth
+                    // 表示动画开始进入后的样式，设置小球完成动画后的结束状态
+                    el.style.transform = "translate(150px,450px)"
+                    el.style.transition = 'all 1s ease' 
+
+                    //这里的 done() 其实就是 afterEnter 函数，也就是 done() 是 afterEnter 的引用
+                    // 必须调用
+                    done()
+                },
+                afterEnter(el) {
+                    console.log("..afterEnter..")
+                    // el.style.transform = "translate(0,0)"
+                    this.flag = !this.flag
+                },
+            },
+        });
+    </script>
+</body>
+</html>
