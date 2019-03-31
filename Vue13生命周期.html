@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <script src="libs/js/vue.js"></script>
+    <title>Vue 声明周期</title>
+</head>
+<body>
+    <div id="app" class="main">
+        <h2 id="h2">{{ msg }}</h2>
+        
+        <button type="button" class="btn btn-primary"  @click="msg = 'Changed'">点击更改内容</button>
+        
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg : "abc",
+            },
+            methods: {
+                show() {
+                    console.log("执行了show方法");
+                },
+            },
+            beforeCreate(){ // 这是我们遇到的第一个生命周期函数，表示实例完全被创建出来之前会被执行
+                // 注意，在执行methods中的方法时候， data 和 methods 中的数据都还没有被初始化
+                this.show()
+            },
+            created(){
+                // 如果要操作data中的数据或者执行methods中的方法最早在 created 中执行。
+                this.show()
+            },
+            beforeMount(){
+                // 第三个生命周期函数， 表示模板在内存中编辑完成了，但是尚未渲染到页面
+                console.log(document.getElementById('h2').innerText);
+                // 在 beforeMount 执行的时候，页面中的元素还没有被真正替换过来，只是之前写的一些模板字符串，
+                // 这时候前面的函数会报错。
+            },
+            mounted(){
+                // 第四个周期函数，也是最后一个生命周期函数，
+                // 表示内存中的模板已经真是的挂载到了页面中，用户已经可以看到渲染好的页面。
+                // 实例已经完全被创建完成，若没有其他操作，则静静的存在内存中
+                console.log('mounted')
+                console.log(document.getElementById('h2').innerText);   // 已经是内容了而非原字符串
+            },
+            beforeUpdate(){
+                // 这个时候我们的页面还没有被更i性能，但是 ！！数据被更新了！！
+                /*
+                    在此时，document.getElementById("idName").innerText 得到的页面数据还是旧的
+                    但是 this.msg 得到的数据 是新的。
+                */
+            },
+            updated(){
+                console.log("界面上的元素是：" + document.getElementById("h2").innerText);
+                console.log("data 中的 msg 数据是：" + this.msg)
+                // update 执行后，页面内容和内存中的数据已经保持了同步一致
+            }
+            
+        })
+    </script>
+</body>
+</html>
