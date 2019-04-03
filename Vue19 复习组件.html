@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 组件复习</title>
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <login></login>
+        <login2></login2>
+    </div>
+
+    <script>
+        // 组件有全局和私有两种。定义的 2 种方式： Vue.component("name", {template: ""})
+        // 1. 直接在第二个参数中定义模板内容
+        // 2. 通过指定 id， 配合 template 标签进行组件的定义。
+
+        // 通过单独定义对象，定义组件模板对象
+        var login = {
+            template: "<h1>BEATREE IS A GOOD BOY!</h1>"
+        }
+        // 通过Vue.component 把组件模板对象，注册为全局的组件
+        Vue.component("login2", login)
+
+
+        var app = new Vue({
+            el: "#app",
+            data: {},
+            components: {
+                // "login2": login
+                login
+                // login 单独放在这会被解析为一个属性，他的属性名是 login, 属性值也是 login !!!
+            },
+        })
+    </script>
+</body>
+</html>

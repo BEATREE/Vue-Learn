@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a href="" @click.prevent="flag=true">登录</a>
+        <a href="" @click.prevent="flag=false">注册</a>
+
+        <login v-if="flag"></login>
+        <register v-else="flag"></register>
+    </div>
+
+    <template id="login">
+        <h3>登录组件</h3>
+    </template>
+    <template id="register">
+            <h3>注册组件</h3>
+        </template>
+
+    <script>
+        // 定义自定义组件
+        Vue.component("login", {
+            template: "#login"
+        })
+        Vue.component("register", {
+            template: "#register"
+        })
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                flag: true
+            },
+            methods: {}
+        })
+    </script>
+</body>
+</html>

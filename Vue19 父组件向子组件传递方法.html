@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父组件向子组件传值 | Vue.js</title>
+
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- data 传值用 v-bind:properyName="dataName"， 方法传递给组件的时候通过 v-on:methodsName="Vue.methodsName" 进行绑定 -->
+        <com2 v-on:funcname="show"></com2>
+        <!-- 绑定的方法 不能使用 大写 例如 funcName 是不可以的 -->
+    </div>
+
+    <template id="templ">
+        <div>
+            <h1> 这是子组件 </h1>
+            <input type="button" value="子组件的按钮，点击触发父组件传递过来的的methods方法" @click="myclick">
+        </div>
+    </template>
+
+    <script>
+        // 定义了一个自变量类型的组件模板对象
+
+        var com2 = {
+            template: "#templ",  // 指定id，加载指定 ID 的 template 内容
+            data(){
+                return{
+                    sonmsg: {name: '小头儿子', age: '5'}
+                }
+            },
+            methods:{
+                myclick(){
+                    console.log('可以触发子组件的点击事件')
+                    // 如何拿到父组件的 funcName 方法，并调用方法 ？？
+                    // $emit 原意是： 触发、调用、发射的意思
+                    // this.$emit("funcname", 123, 'ABC') 调用组件中的方法，并向父组件传参， 通过后续参数指定传参方式
+                    this.$emit("funcname", this.sonmsg)
+                }
+            }
+        }
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg: "父组件中的数据：123",
+                dataMsgFromSon: null
+            },
+            methods: {
+                show(data){
+                    this.dataMsgFromSon = data;
+                    console.log(data)
+                }
+            },
+            components: {
+                com2
+            }
+        })
+    </script>
+</body>
+</html>

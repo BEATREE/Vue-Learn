@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父组件向子组件传值 | Vue.js</title>
+
+    <script src="libs/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 2. 父组件可以在引用子组件的时候通过 属性绑定 (v-bind / :) 的形式
+            把需要传递给组件的数据，以属性绑定的形式 传递到子组件内部，共子组件使用
+        -->
+        父组件中的 <code>msg</code>: <input type="text" name="" id="" v-model="msg" >
+        <com1 :parentmsg="msg"></com1>
+    </div>
+
+    <script>
+
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg: "父组件中的数据：123",
+            },
+            methods: {},
+            components: {
+                // 1. 经过实践测试 子组件中无法访问到父组件 data 中的数据 和 methods 中的方法
+                com1: { // 比 data 和 methods 低一级，所以相对来说是子组件
+                    data(){     // 6. 这是子组件自己的数据，而非父组件给的，ATTENTION： 组件中的data是个方法
+                        return {
+                            title: 123,
+                            content: "ABCDE"
+                        }
+                    },
+                    template: "<h1 @click='change'> 这是一个子组件 -- {{parentmsg}}</h1>", // 3.直接使用绑定的数据还无法使用
+                    // 5. 组件中 所有 props 中的数据，都是父组件传给子组件的
+                    props: ["parentmsg"],    // 4. 把父组件传递过来的 parentmsg 属性，现在props数组中定义 
+                    // props 中的数据对于子组件都是只读的，data中的则是可读可写
+                    methods: {
+                        change(){
+                            this.parentmsg = "被修改了" // 控制台会报错
+                        }
+                    }
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

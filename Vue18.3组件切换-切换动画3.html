@@ -1,0 +1,67 @@
+<!-- 
+    当前学的 Vue 提供的标签：
+        component, template, transition, transition-group
+ -->
+
+<!DOCTYPE html>
+<html lang="CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <script src="libs/js/vue.js"></script>
+    <style>
+        .v-enter, .v-leave-to{
+            opacity: 0;
+            transform: translateX(120px);
+        }
+        .v-enter-active, .v-leave-active{
+            transition: all .5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        
+        <a href="" @click.prevent="comName='login'">登录</a>
+        <a href="" @click.prevent="comName='register'">注册</a>
+
+        <!-- 多个组件的过渡简单很多 - 我们不需要使用 key 特性。相反，我们只需要使用动态组件： -->
+        <!-- <transition name="component-fade" mode="out-in">
+            <component v-bind:is="view"></component>
+        </transition> -->
+        <!-- 通过 mode 属性设置组件切换时候的模式 out-in 先出去，再进来 -->
+        <transition appear mode="out-in"> 
+            <component :is="comName"></component>
+        </transition>
+        
+    </div>
+
+    <template id="login">
+        <h3>登录组件</h3>
+    </template>
+    <template id="register">
+            <h3>注册组件</h3>
+        </template>
+
+    <script>
+        // 定义自定义组件
+        Vue.component("login", {
+            template: "#login"
+        })
+        Vue.component("register", {
+            template: "#register"
+        })
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                comName: "login"     // 当前 component 组件中 :is 绑定的组件名称
+            },
+            methods: {}
+        })
+    </script>
+</body>
+</html>
