@@ -21,6 +21,7 @@
         <input type="button" value="快到碗里来" @click="flag=!flag">
         <!-- 1. 使用 transition 元素将小球包裹 -->
         
+        <!-- 半场动画实现 进入前， 进入完成后， 进入后再处理 -->
         <transition
             mode="out-in"
             @befor-enter="beforeEnter"
