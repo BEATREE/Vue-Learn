@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>路由 命名视图实现经典布局</title>
+    <script src="libs/js/vue.js"></script>
+    <script src="libs/js/vue-router.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        .header{
+            background: red;
+            height: 100px;
+        }
+        .container{
+            display:flex;
+            height: 500px;
+        }
+        .left{
+            background: lightblue;
+            flex:2;
+        }
+        .main{
+            background: lightsalmon;
+            flex:8;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <router-view></router-view>
+        <div class="container">
+            <!-- name 中放的left 只是个字符串，因为name属性前没有冒号，只是普通的html属性-->
+            <!-- 不进行绑定，其内属性永远都是字符串 -->
+            <router-view name="left"></router-view> 
+            <router-view name="main"></router-view>
+        </div>
+
+    </div>
+
+    <script>
+        var header = {
+            template: "<h1 class='header'>This is Header</h1>"
+        }
+        var leftBox = {
+            template: "<h1 class='left'>This is LeftBox Sidebar</h1>"
+        }
+        var mainBox = {
+            template: "<h1 class='main'>This is MainBox</h1>"
+        }
+        // 创建路由对象
+        var routerObj = new VueRouter({
+            routes: [
+                // { path:"/", component:header },
+                // { path:"/left", component:leftBox },
+                // { path:"/main", component:mainBox },
+
+                {path:'/', components: {
+                    'default': header,
+                    'left': leftBox,
+                    'main': mainBox
+                }},
+
+            ]
+        })
+
+        var app = new Vue({
+            el: "#app",
+            router: routerObj
+        })
+    </script>
+</body>
+</html>
