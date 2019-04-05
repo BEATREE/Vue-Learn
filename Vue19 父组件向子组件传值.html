@@ -41,7 +41,7 @@
                     // props 中的数据对于子组件都是只读的，data中的则是可读可写
                     methods: {
                         change(){
-                            this.parentmsg = "被修改了" // 控制台会报错
+                            this.parentmsg = "被修改了" // 控制台会报错，不允许子组件修改父组件信息，保证安全性
                         }
                     }
 

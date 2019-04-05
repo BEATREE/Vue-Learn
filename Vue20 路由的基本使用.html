@@ -32,8 +32,8 @@
         <a href="#/register">注册</a> -->
 
         <!-- 默认渲染为A标签 ，加上tag 后，任然保持有一个触发的事件-->
-        <router-link to="login" tag="span">登录</router-link>
-        <router-link to="register">注册</router-link>
+        <router-link to="/login" tag="span">登录</router-link>
+        <router-link to="register">注册</router-link><!-- 这里to加不加/都可以 -->
 
         <!-- vue-router 提供的元素，专门用来作为占位符，将来路由规则匹配到的组件会展示到这个
             router-view 中去。 故是个占位符
