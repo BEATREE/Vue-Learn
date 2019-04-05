@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>wathch 监视路由的改变</title>
+    <script src="libs/js/vue.js"></script>  
+    <script src="libs/js/vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script>
+        
+        // 定义组件对象
+        var login = {
+            template: "<h1> 这是登录子组件 </h1>"
+        }
+        var register = {
+            template: "<h1> 这是注册子组件 </h1>"
+        }
+
+        // 注册 路由 ，并添加映射
+        var routerObj = new VueRouter({
+            routes: [
+                {path: "/", redirect: "/login"},
+                {path: "/login", component: login},
+                {path: "/register", component: register}
+            ]
+        })
+
+        // 定义 vue 实例
+        var app = new Vue({
+            el: "#app",
+            data: {},
+            methods: {},
+            router: routerObj,  // 为 Vue 实例注册路由
+            watch: {
+                // this.$route.path
+                // '$route.path':(newValue, oldValue)=>{    // 相当于 '$route.path':function(newValue, oldValue)监听 
+                '$route.path'(newValue, oldValue){          // Vue 中的另一种写法
+                    // console.log(newValue + "--" + oldValue)
+                    if(newValue === "/login"){
+                        console.log('欢迎进入登录页面')
+                    }else if(newValue === "/register"){
+                        console.log('欢迎进入注册页面')
+                    }
+                },
+            }
+        })
+    </script>
+</body>
+</html>

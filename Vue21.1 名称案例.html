@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例</title>
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <script src="libs/js/vue.js"></script> 
+
+</head>
+<body>
+    <div id="app" class="container" style="padding-top: 22px;">
+        
+        <form action="" method="POST" class="form-inline" role="form">
+        
+            <div class="form-group">
+                <!-- 分析 
+                    1. 监听到文本框内容的改变，然后进行 fullname 的拼接
+                    2. 如何监听 文本框数据的改变呢 ？？ @keyup 或者 change
+
+                -->
+                <input type="text" v-model="firstname" @keyup="getFullname" name="" id="input" class="form-control">+
+                <input type="text" v-model="lastname" @keyup="getFullname" name="" id="input2" class="form-control">=
+                <input type="text" v-model="fullname" name="" id="input3" class="form-control">
+            </div>
+        </form>
+        
+        
+
+
+    </div>
+
+    <script>
+        
+        var app = new Vue({
+            el: "#app",
+            data: {
+                firstname: "",
+                lastname: "",
+                fullname: "",
+            },
+            methods: {
+                getFullname(){
+                    this.fullname = this.firstname + "-" + this.lastname
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例</title>
+    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <script src="libs/js/vue.js"></script> 
+
+</head>
+<body>
+    <div id="app" class="container" style="padding-top: 22px;">
+        
+        <form action="" method="POST" class="form-inline" role="form">
+        
+            <div class="form-group">
+                <!-- 分析 
+                    1. 监听到文本框内容的改变，然后进行 fullname 的拼接
+                    2. 如何监听 文本框数据的改变呢 ？？ @keyup 或者 change
+
+                -->
+                <input type="text" v-model="firstname" name="" id="input" class="form-control">+
+                <input type="text" v-model="middlename" name="" id="input" class="form-control">+
+                <input type="text" v-model="lastname" name="" id="input2" class="form-control">=
+                <input type="text" v-model="fullname" name="" id="input3" class="form-control">
+
+                <p>{{ fullname }}</p>
+                <p>{{ fullname }}</p>
+            </div>
+        </form>
+        
+        
+
+
+    </div>
+
+    <script>
+        
+        var app = new Vue({
+            el: "#app",
+            data: {
+                firstname: "",
+                middlename: "",
+                lastname: "",
+            },
+            methods: {},
+            computed: {     // 在 computed 中可以定义一些属性，叫做 计算属性
+                // 计算属性本质是一个方法，只不过我们在使用的时候将 他们的名称，当作属性进行使用。并不会把计算属性当作方法进行调用
+                
+                // 注意： 1.计算属性，在调用的时候，一定不要加 “()” 去调用，直接把他当成普通属性就好
+                // 注意： 2.只要计算属性function内部的任何数据发生了变化，就会立即重新计算属性的值
+                // 注意： 3. 计算属性的返回结果会被 缓存 ，方便下次直接使用。 如果计算属性方法中的任何数据都没有发生过变化，则，不会重新对计算属性求值
+
+                // 'fullname': function(){
+                fullname() {        //两种形式写法均可
+                    console.log('调用了 computed 计算属性')
+                    return this.firstname + "-" + this.middlename + "-" + this.lastname 
+                },
+            },
+        })
+    </script>
+</body>
+</html>
