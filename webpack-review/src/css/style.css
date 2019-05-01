@@ -1,0 +1,17 @@
+body{
+    background-color: blueviolet;
+}
+.box {
+    width: 220px;
+    height: 120px;
+    /*  默认情况下，css 无法处理css文件中的 url 地址，不管是图片，还是地址库，只要是url地址，都处理不了 */
+    background: url('../images/sportCar.jpg');
+    background-size: cover;
+}
+.box2 {
+    width: 220px;
+    height: 120px;
+    /*  默认情况下，css 无法处理css文件中的 url 地址，不管是图片，还是地址库，只要是url地址，都处理不了 */
+    background: url('../images2/sportCar.jpg');
+    background-size: cover;
+}
