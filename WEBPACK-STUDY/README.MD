@@ -32,3 +32,19 @@ webpack配置的基础js文件，其内包含webpack 相关的笔记内容，另
 `webpack-dev-server --open --port 3000 --contentBase src`
 `--open` 打开浏览器， `--port` 指定端口 `--contentBase` 指定默认根目录
 不会重新完全生成 bundle.js 而是 添加一个js文件和json文件，进行局部修改，避免了多次修改造成的浪费
+
+## SOMETHING ABOUT LOADER
+
+对于一些特定的类型，webpack 需要依靠第三方的 loader 进行封装和解析。相关的loader有：
+
+`css` 对应的 loader ： `style-loader, css-loader`
+
+`less` 对应的 loader：`style-loader, css-loader, less-loader`
+
+安装 `less-loader` 需要安装内部依赖的 `less` ，才可以。命令 `npm install less -D`
+
+`scss` 对应的 loader：`style-loader, css-loader, sass-loader, node-sass`
+
+安装 `sass-loader` 还需要安装 `node-sass` 支持 `sass-loader`
+
+其他的 loader 会在使用到的项目中，提到
