@@ -2,6 +2,8 @@
 
 项目去除了 `node_modules` ，在使用项目前需要先使用 `npm install` 进行初始化
 
+[页面演示](src)
+
 ## webpack.config.js
 
 webpack配置的基础js文件，其内包含webpack 相关的笔记内容，另外还有 `package.json` 中的配置文件信息。
