@@ -1,5 +1,7 @@
 # 在 webpack 中使用 vue
 
+[页面演示](src)
+
 ## 如何使用 vue
 
 1. 安装 vue 的包：`npm install vue -S` 即，运行时装载的包
