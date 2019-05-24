@@ -2,6 +2,8 @@
 
 项目去除了 `node_modules` 文件夹，注意使用 `npm install` 初始化项目环境
 
+[页面演示](src)
+
 ## 如何使用 vue
 
 1. 安装 vue 的包：`npm install vue -S` 即，运行时装载的包
