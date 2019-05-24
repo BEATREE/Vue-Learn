@@ -2,6 +2,8 @@
 
 项目去除了 `node_modules` ，在使用项目前需要先使用 `npm install` 进行初始化
 
+[页面演示](src)
+
 ## 项目基本配置
 
 建立项目后，首先进行环境初始化 `npm init -y` 进行初始化，然后创建 `webpack.config.js` 文件进行基础的 webpack 的配置。 对于指定文件和操作，需要引入 loader
